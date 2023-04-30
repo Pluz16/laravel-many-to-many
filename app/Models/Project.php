@@ -27,6 +27,11 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
     /**
      * The attributes that should be mutated to dates.
      *
