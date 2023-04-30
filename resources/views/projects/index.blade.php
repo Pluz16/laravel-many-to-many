@@ -12,6 +12,7 @@
                 <tr>
                     <th>Name</th>
                     <th>User</th>
+                    <th>Type</th>
                     <th>Description</th>
                     <th>URL</th>
                     <th>Actions</th>
@@ -21,7 +22,8 @@
                 @foreach ($projects as $project)
                     <tr>
                         <td>{{ $project->name }}</td>
-                        <td>{{ $project->user }}</td>
+                        <td>{{ $project->user_id }}</td>
+                        <td>{{ optional($project->type)->name }}</td>
                         <td>{{ $project->description }}</td>
                         <td>{{ $project->url }}</td>
                         <td>
