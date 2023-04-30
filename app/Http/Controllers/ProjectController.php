@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -26,6 +27,7 @@ class ProjectController extends Controller
 
         $project = new Project($validatedData);
         $project->user_id = Auth::id();
+        $project->slug = Str::slug($project->name);
         $project->save();
     
         return redirect()->route('projects.index')

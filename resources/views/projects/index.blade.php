@@ -4,6 +4,8 @@
 
 @section('content')
     <h1 class="mb-4">Projects</h1>
+    <a href="{{ route('projects.create') }}" class="btn btn-primary">Crea nuovo progetto</a>
+
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>

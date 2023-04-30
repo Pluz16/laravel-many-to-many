@@ -29,10 +29,6 @@
             <input type="url" class="form-control" id="url" name="url" value="{{ old('url') }}">
         </div>
 
-        <div class="form-group">
-            <label for="slug">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}" required>
-        </div>
 
         <button type="submit" class="btn btn-primary">Create Project</button>
     </form>
