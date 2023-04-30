@@ -6,15 +6,25 @@ use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\Type;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+    $typeId = $request->input('type_id'); // Recupero l'ID del tipo dalla richiesta
+
+    if ($typeId) {
+        $type = Type::find($typeId);
+        $projects = $type->projects;
+    } else {
         $projects = Project::all();
-        return view('projects.index', compact('projects'));
+    }
+
+    return view('projects.index', compact('projects'));
     }
 
     public function create()
