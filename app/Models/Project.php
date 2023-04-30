@@ -32,6 +32,10 @@ class Project extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function getRouteKeyName()
+    {
+    return 'slug';
+    }
     /**
      * The attributes that should be mutated to dates.
      *
