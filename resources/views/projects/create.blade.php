@@ -15,8 +15,8 @@
         </div>
 
         <div class="form-group">
-            <label for="user">User</label>
-            <input type="text" class="form-control" id="user" name="user" value="{{ old('user') }}" required>
+            <label for="user_id">User</label>
+            <input type="text" class="form-control" id="user_id" name="user" value="{{ old('user_id') }}" required>
         </div>
 
         <div class="form-group">

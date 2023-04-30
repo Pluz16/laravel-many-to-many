@@ -16,13 +16,16 @@ return new class extends Migration
     Schema::create('projects', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('user');
+        $table->unsignedBigInteger('user_id');
         $table->text('description')->nullable();
         $table->string('url')->nullable();
         $table->string('slug')->unique();
         $table->timestamps();
         $table->softDeletes();
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
+
+    
 }
 
     /**

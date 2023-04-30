@@ -29,7 +29,7 @@ class UpdateProjectRequest extends FormRequest
 
     return [
         'name' => 'required|string|max:255',
-        'user' => 'required|string|max:255',
+        'user_id' => 'required|string|max:255',
         'description' => 'nullable|string',
         'url' => 'nullable|string|max:255|url',
         'slug' => [

@@ -17,11 +17,15 @@ class Project extends Model
      */
     protected $fillable = [
         'name',
-        'user',
+        'user_id',
         'description',
         'url',
         'slug',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * The attributes that should be mutated to dates.

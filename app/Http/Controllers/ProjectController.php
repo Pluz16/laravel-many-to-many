@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -34,15 +35,19 @@ class ProjectController extends Controller
                          ->with('success', 'Il progetto è stato creato con successo.');
     }
 
-    public function show(Project $project)
-    {
-        return view('projects.show', compact('project'));
-    }
+    public function show($id)
+{
+    $project = Project::findOrFail($id);
 
-    public function edit(Project $project)
-    {
-        return view('projects.edit', compact('project'));
-    }
+    return view('projects.show')
+             ->with('project', $project);
+}
+
+
+public function edit(Project $project): View
+{
+    return view('projects.edit', compact('project'));
+}
 
     public function update(UpdateProjectRequest $request, Project $project)
     {
