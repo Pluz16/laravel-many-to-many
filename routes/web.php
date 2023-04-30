@@ -33,4 +33,7 @@ Route::resource('projects', ProjectController::class)->parameters([
     'projects' => 'project:slug'
 ]);
 
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+
+
 require __DIR__.'/auth.php';

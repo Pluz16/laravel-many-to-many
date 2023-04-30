@@ -45,13 +45,16 @@ class ProjectController extends Controller
                          ->with('success', 'Il progetto è stato creato con successo.');
     }
 
-    public function show($id)
+    
+    
+    public function show($slug)
 {
-    $project = Project::findOrFail($id);
+    $project = Project::where('slug', $slug)->firstOrFail();
+    $project->load('type');
 
-    return view('projects.show')
-             ->with('project', $project);
+    return view('projects.show', compact('project'));
 }
+
 
 
 public function edit(Project $project): View
