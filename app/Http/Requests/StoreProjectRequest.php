@@ -25,7 +25,10 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
+            'user' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'url' => 'nullable|string|max:255|url',
+            'slug' => 'required|string|max:255|unique:projects',
         ];
     }
 }

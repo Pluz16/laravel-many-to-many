@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Validation\Rule;
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProjectRequest extends FormRequest
@@ -11,10 +12,11 @@ class UpdateProjectRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
-    }
+    public function authorize(Project $project)
+{
+    return $this->user()->owns($project);
+}
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,10 +24,23 @@ class UpdateProjectRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
-        return [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-        ];
-    }
+{
+    $project = $this->route('project');
+
+    return [
+        'name' => 'required|string|max:255',
+        'user' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'url' => 'nullable|string|max:255|url',
+        'slug' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('projects')->ignore($project->id),
+        ]
+    ];
+}
+
+
+    
 }

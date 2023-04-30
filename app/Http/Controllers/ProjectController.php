@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -19,19 +20,16 @@ class ProjectController extends Controller
         return view('projects.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'user' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'url' => 'nullable|string|max:255|url',
-            'slug' => 'required|string|max:255|unique:projects',
-        ]);
+        $validatedData = $request->validated();
 
-        $project = Project::create($validatedData);
-
-        return redirect()->route('projects.show', $project->slug)->with('success', 'Project created successfully.');
+        $project = new Project($validatedData);
+        $project->user_id = Auth::id();
+        $project->save();
+    
+        return redirect()->route('projects.index')
+                         ->with('success', 'Il progetto è stato creato con successo.');
     }
 
     public function show(Project $project)
@@ -44,24 +42,15 @@ class ProjectController extends Controller
         return view('projects.edit', compact('project'));
     }
 
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'user' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'url' => 'nullable|string|max:255|url',
-            'slug' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('projects')->ignore($project->id),
-            ],
-        ]);
+        $validatedData = $request->validated();
 
-        $project->update($validatedData);
+    $project->update($validatedData);
+    $request->authorize($project);
 
-        return redirect()->route('projects.show', $project->slug)->with('success', 'Project updated successfully.');
+    return redirect()->route('projects.index')
+                     ->with('success', 'Il progetto è stato aggiornato con successo.');
     }
 
     public function destroy(Project $project)
