@@ -8,7 +8,7 @@
         </h1>
 
         <p class="col-md-8 fs-4">Con il nostro strumento facile da usare, puoi tenere traccia dei tuoi progetti in tempo reale e collaborare con i tuoi colleghi in modo più efficiente che mai.</p>
-        <a href="{{ route('projects.index') }}" class="btn btn-primary">View Projects</a>
+        <a href="{{ route('projects.index') }}" class="btn btn-primary view-projects-btn">View Projects</a>
 
     </div>
 </div>
