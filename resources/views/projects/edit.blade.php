@@ -27,6 +27,27 @@
                             </div>
 
                             <div class="form-group row">
+    <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+
+    <div class="col-md-6">
+        <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
+            <option value="">Seleziona una tipologia</option>
+            @foreach ($types as $type)
+                <option value="{{ $type->id }}" {{ $type->id == $project->type_id ? 'selected' : '' }}>{{ $type->name }}</option>
+            @endforeach
+        </select>
+        @error('type')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        <input type="hidden" name="type_id" value="{{ old('type_id', $project->type_id) }}">
+        <a href="{{ route('types.index') }}" target="_blank">Crea nuova tipologia</a>
+    </div>
+</div>
+
+
+                            <div class="form-group row">
                                 <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">

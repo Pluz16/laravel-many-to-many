@@ -19,6 +19,26 @@
             <input type="text" class="form-control" id="user_id" name="user" value="{{ old('user_id') }}" required>
         </div>
 
+        <div class="form-group row">
+    <label for="types" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+    <div class="col-md-6">
+        <div class="btn-group-toggle" data-toggle="buttons">
+            @foreach ($types as $type)
+                <label class="btn btn-outline-secondary {{ in_array($type->id, old('types', [])) ? 'active' : '' }}">
+                    <input type="checkbox" name="types[]" value="{{ $type->id }}" autocomplete="off" {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}> {{ $type->name }}
+                </label>
+            @endforeach
+        </div>
+
+        @error('types')
+            <span class="invalid-feedback d-block" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
+
+
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>

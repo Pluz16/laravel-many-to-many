@@ -28,9 +28,10 @@ class ProjectController extends Controller
     }
 
     public function create()
-    {
-        return view('projects.create');
-    }
+{
+    $types = Type::all();
+    return view('projects.create')->with('types', $types);
+}
 
     public function store(StoreProjectRequest $request)
     {
@@ -57,9 +58,12 @@ class ProjectController extends Controller
 
 
 
-public function edit(Project $project): View
+public function edit($slug)
 {
-    return view('projects.edit', compact('project'));
+    $project = Project::where('slug', $slug)->firstOrFail();
+    $types = Type::all();
+
+    return view('projects.edit', compact('project', 'types'));
 }
 
     public function update(UpdateProjectRequest $request, Project $project)
@@ -79,4 +83,15 @@ public function edit(Project $project): View
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
+    public function types($id)
+{
+    $project = Project::findOrFail($id);
+    $types = Type::all();
+
+    return view('projects.types')->with([
+        'project' => $project,
+        'types' => $types,
+    ]);
+}
+
 }
