@@ -5,6 +5,12 @@
 @section('content')
     <h1 class="mb-4">Projects</h1>
     <a href="{{ route('projects.create') }}" class="btn btn-primary">Create New Project</a>
+    <a href="{{ route('projects.trash') }}" class="btn btn-secondary">
+    Cestino 
+    @if($trashedCount > 0)
+        <span class="badge badge-danger">{{ $trashedCount }}</span>
+    @endif
+</a>
 
     <form action="{{ route('projects.index') }}" method="GET" class="my-4">
         <div class="row g-2 align-items-center">

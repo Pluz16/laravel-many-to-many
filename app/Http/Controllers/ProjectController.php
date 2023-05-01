@@ -21,8 +21,9 @@ class ProjectController extends Controller
             $projectsQuery->where('type_id', $selectedTypeId);
         }
         $projects = $projectsQuery->get();
+        $trashedCount = Project::onlyTrashed()->count();
         $types = Type::all();
-        return view('projects.index', compact('projects', 'types', 'selectedTypeId'));
+        return view('projects.index', compact('projects', 'types', 'selectedTypeId', 'trashedCount'));
     }
     
 
