@@ -62,7 +62,7 @@ public function store(StoreProjectRequest $request)
 
     
     
-public function show($slug)
+   public function show($slug)
 {
     $project = Project::where('slug', $slug)->firstOrFail();
     $project->load('types');
@@ -91,12 +91,25 @@ public function edit($slug)
                      ->with('success', 'Il progetto è stato aggiornato con successo.');
     }
 
-    public function destroy(Project $project)
-    {
+    public function destroy(Project $project, Request $request)
+{
+    if ($request->has('delete')) {
+        $project->forceDelete();
+        return redirect()->route('projects.trash')->with('success', 'Progetto eliminato definitivamente.');
+    } else {
         $project->delete();
-
-        return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
+        return redirect()->route('projects.index')->with('success', 'Progetto eliminato con successo.');
     }
+}
+
+public function trash()
+{
+    $projects = Project::onlyTrashed()->get();
+    return view('projects.trash', compact('projects'));
+}
+
+
+
     public function types($id)
 {
     $project = Project::findOrFail($id);
