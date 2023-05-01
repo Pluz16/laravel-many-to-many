@@ -4,7 +4,33 @@
 
 @section('content')
     <h1 class="mb-4">Projects</h1>
-    <a href="{{ route('projects.create') }}" class="btn btn-primary">Crea nuovo progetto</a>
+    <a href="{{ route('projects.create') }}" class="btn btn-primary">Create New Project</a>
+
+    <form action="{{ route('projects.index') }}" method="GET" class="my-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-auto">
+                <label for="type_id" class="col-form-label">Filter by Type:</label>
+            </div>
+            <div class="col-auto">
+                <select name="type_id" id="type_id" class="form-select">
+                    <option value="">All Types</option>
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}" {{ $type->id == $selectedTypeId ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Apply Filter</button>
+            </div>
+            @if ($selectedTypeId)
+                <div class="col-auto">
+                    <a href="{{ route('projects.index') }}" class="btn btn-secondary">Clear Filter</a>
+                </div>
+            @endif
+        </div>
+    </form>
 
     <div class="table-responsive">
         <table class="table table-hover">

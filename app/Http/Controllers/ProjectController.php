@@ -14,24 +14,35 @@ use App\Http\Requests\UpdateProjectRequest;
 class ProjectController extends Controller
 {
     public function index(Request $request)
-    {
-    $typeId = $request->input('type_id'); // Recupero l'ID del tipo dalla richiesta
+{
+    $selectedTypeId = $request->input('type_id');
+    $types = Type::all();
 
-    if ($typeId) {
-        $type = Type::find($typeId);
-        $projects = $type->projects;
-    } else {
-        $projects = Project::all();
+    // Se il tipo selezionato non esiste, reimposta il tipo selezionato a null
+    if ($selectedTypeId && !$types->pluck('id')->contains($selectedTypeId)) {
+        $selectedTypeId = null;
     }
 
-    return view('projects.index', compact('projects'));
+    $projects = Project::query();
+
+    if ($selectedTypeId) {
+        $projects = $projects->where('type_id', $selectedTypeId);
     }
+    
+    $projects = $projects->get();
+
+    return view('projects.index', compact('projects', 'types', 'selectedTypeId'));
+}
+
+
+
 
     public function create()
 {
     $types = Type::all();
-    return view('projects.create')->with('types', $types);
+    return view('projects.create', compact('types'));
 }
+
 
 public function store(StoreProjectRequest $request)
 {
