@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Type;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -13,9 +13,9 @@ class StoreProjectRequest extends FormRequest
      * @return bool
      */
     public function authorize()
-{
-    return Auth::check();
-}
+    {
+        return Auth::check();
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,13 +24,20 @@ class StoreProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string|max:255',
             'user' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'nullable|string|max:255|url',
-            'type_id' => 'nullable|exists:types,id'
-
         ];
+
+        // Add the type_id validation rule only if the type exists
+        $type = Type::find($this->input('type_id'));
+        if ($type) {
+            $rules['type_id'] = 'exists:types,id';
+        }
+
+        return $rules;
     }
 }
+

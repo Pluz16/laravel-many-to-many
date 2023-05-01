@@ -42,7 +42,6 @@
             </span>
         @enderror
         <input type="hidden" name="type_id" value="{{ old('type_id', $project->type_id) }}">
-        <a href="{{ route('types.index') }}" target="_blank">Crea nuova tipologia</a>
     </div>
 </div>
 

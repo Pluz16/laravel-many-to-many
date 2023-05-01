@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,12 +34,11 @@ Route::resource('projects', ProjectController::class)->parameters([
 ]);
 
 Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
-Route::resource('types', TypeController::class);
 Route::get('/projects/{project}/types', [ProjectController::class, 'types'])->name('projects.types');
+Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update')->middleware('can:update,project');
 
-Route::get('/types/create', [TypeController::class, 'create'])->name('types.create');
-Route::post('/types', [TypeController::class, 'store'])->name('types.store');
-Route::get('/types', [TypeController::class, 'index'])->name('types.index');
+Route::resource('types', TypeController::class);
 
 
 require __DIR__.'/auth.php';
+
