@@ -5,10 +5,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h3>{{ $project->name }}</h3>
-                    <h5>Di {{ $project->user_id->name }}</h5>
-                </div>
+            <div class="card-header bg-primary text-white">
+            <h3>{{ $project->name }}</h3>
+            <h5>Di {{ $project->user->name }}</h5> 
+            </div>
+
                 <div class="card-body">
                     <h5 class="card-title">Descrizione del progetto:</h5>
                     <p class="card-text">{{ $project->description }}</p>

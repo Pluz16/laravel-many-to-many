@@ -39,6 +39,20 @@ Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('p
 
 Route::resource('types', TypeController::class);
 
+Route::get('/types', [TypeController::class, 'index'])->name('types.index');
+
+Route::get('/types/create', [TypeController::class, 'create'])->name('types.create');
+
+Route::post('/types', [TypeController::class, 'store'])->name('types.store');
+
+Route::get('/types/{type}', [TypeController::class, 'show'])->name('types.show');
+
+Route::get('/types/{type}/edit', [TypeController::class, 'edit'])->name('types.edit');
+
+Route::put('/types/{type}', [TypeController::class, 'update'])->name('types.update');
+
+Route::delete('/types/{type}', [TypeController::class, 'destroy'])->name('types.destroy');
+
 
 require __DIR__.'/auth.php';
 

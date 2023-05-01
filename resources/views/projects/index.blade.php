@@ -33,32 +33,38 @@
     </form>
 
     <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($projects as $project)
                 <tr>
-                    <th>Name</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>URL</th>
-                    <th>Actions</th>
+                    <td>{{ $project->name }}</td>
+                    <td>{{ $project->user_id }}</td>
+                    <td>{{ optional($project->type)->name }}</td>
+                    <td>{{ $project->description }}</td>
+                    <td>{{ $project->url }}</td>
+                    <td>
+                        <a href="{{ route('projects.show', $project->slug) }}" class="btn btn-sm btn-info">View</a>
+                        <a href="{{ route('projects.edit', $project->slug) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('projects.destroy', $project->slug) }}" method="POST" class="d-inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($projects as $project)
-                    <tr>
-                        <td>{{ $project->name }}</td>
-                        <td>{{ $project->user_id }}</td>
-                        <td>{{ optional($project->type)->name }}</td>
-                        <td>{{ $project->description }}</td>
-                        <td>{{ $project->url }}</td>
-                        <td>
-                            <a href="{{ route('projects.show', $project->slug) }}" class="btn btn-sm btn-info">View</a>
-                            <a href="{{ route('projects.edit', $project->slug) }}" class="btn btn-sm btn-warning">Edit</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 @endsection
