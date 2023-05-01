@@ -103,6 +103,14 @@ public function edit($slug)
     }
 }
 
+public function forceDelete($id)
+{
+    $project = Project::onlyTrashed()->findOrFail($id);
+    $project->forceDelete();
+    return redirect()->route('projects.trash')->with('success', 'Progetto eliminato definitivamente.');
+}
+
+
 public function trash()
 {
     $projects = Project::onlyTrashed()->get();

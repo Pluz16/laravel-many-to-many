@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/projects/{slug}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
 Route::get('projects/trash', [ProjectController::class, 'trash'])->name('projects.trash');
 Route::put('/projects/{id}/restore', [App\Http\Controllers\ProjectController::class, 'restore'])->name('projects.restore');
-Route::delete('/projects/{id}/force-delete', [App\Http\Controllers\ProjectController::class, 'forceDelete'])->name('projects.force-delete');
+Route::delete('/projects/{id}/force-delete', [ProjectController::class, 'forceDelete'])->name('projects.force-delete');
 
 
 Route::resource('projects', ProjectController::class)->parameters([

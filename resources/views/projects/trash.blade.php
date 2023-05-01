@@ -28,9 +28,11 @@
                         <td>{{ $project->user->name }}</td>
                         <td>{{ $project->deleted_at->diffForHumans() }}</td>
                         <td>
-                            <a href="{{ route('projects.restore', $project->id) }}" class="btn btn-success btn-sm" title="Ripristina progetto">
-                                <i class="fa fa-undo"></i>
-                            </a>
+                        <form method="POST" action="{{ route('projects.restore', $project->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit">Ripristina</button>
+                        </form>
                             <form action="{{ route('projects.force-delete', $project->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
