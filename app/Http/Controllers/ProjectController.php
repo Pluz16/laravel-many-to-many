@@ -33,18 +33,29 @@ class ProjectController extends Controller
     return view('projects.create')->with('types', $types);
 }
 
-    public function store(StoreProjectRequest $request)
-    {
-        $validatedData = $request->validated();
+public function store(StoreProjectRequest $request)
+{
+    $validatedData = $request->validated();
 
-        $project = new Project($validatedData);
-        $project->user_id = Auth::id();
-        $project->slug = Str::slug($project->name);
+    $project = new Project($validatedData);
+    $project->user_id = Auth::id();
+    $project->slug = Str::slug($project->name);
+    $project->save();
+
+    // Check if a type has been selected
+    if ($request->input('type_id')) {
+        // Find the selected type in the database
+        $type = Type::findOrFail($request->input('type_id'));
+
+        // Associate the type with the new project
+        $project->type()->associate($type);
         $project->save();
-    
-        return redirect()->route('projects.index')
-                         ->with('success', 'Il progetto è stato creato con successo.');
     }
+    
+    return redirect()->route('projects.index')
+                     ->with('success', 'Il progetto è stato creato con successo.');
+}
+
 
     
     

@@ -29,6 +29,8 @@ class StoreProjectRequest extends FormRequest
             'user' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'nullable|string|max:255|url',
+            'type_id' => 'nullable|exists:types,id'
+
         ];
     }
 }
