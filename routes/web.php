@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/projects/{slug}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+
+
 Route::resource('projects', ProjectController::class)->parameters([
     'projects' => 'project:slug'
 ]);

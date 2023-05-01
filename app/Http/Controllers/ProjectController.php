@@ -62,13 +62,13 @@ public function store(StoreProjectRequest $request)
 
     
     
-    public function show($slug)
+public function show($slug)
 {
     $project = Project::where('slug', $slug)->firstOrFail();
-    $project->load('type');
-
+    $project->load('types');
     return view('projects.show', compact('project'));
 }
+
 
 
 
@@ -107,5 +107,6 @@ public function edit($slug)
         'types' => $types,
     ]);
 }
+
 
 }

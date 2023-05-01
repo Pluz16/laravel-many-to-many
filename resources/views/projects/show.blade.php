@@ -18,13 +18,14 @@
                     <h5 class="card-title">Slug del progetto:</h5>
                     <p class="card-text">{{ $project->slug }}</p>
                     <h5 class="card-title">Tipologia:</h5>
-                    @if ($project->type)
-                        <p class="card-text">{{ $project->type->name }}</p>
-                    @else
-                        <p class="card-text">Nessuna tipologia associata</p>
-                    @endif
+                    @if ($project->types->isNotEmpty())
+    <p class="card-text">{{ $project->types->first()->name }}</p>
+@else
+    <p class="card-text">Nessuna tipologia associata</p>
+@endif
 
-                    <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning">Modifica progetto</a>
+
+                    <a href="{{ route('projects.edit', $project->slug) }}" class="btn btn-warning">Modifica progetto</a>
                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
