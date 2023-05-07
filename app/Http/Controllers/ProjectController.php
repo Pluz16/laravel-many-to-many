@@ -117,6 +117,20 @@ public function trash()
     return view('projects.trash', compact('projects'));
 }
 
+public function restore($id)
+{
+    $project = Project::withTrashed()->find($id);
+
+    if (!$project) {
+        return response()->json(['error' => 'Project not found'], 404);
+    }
+
+    $project->restore();
+
+    return redirect()->route('projects.index')->with('success', 'Project successfully restored.');
+}
+
+
 
 
     public function types($id)
@@ -129,6 +143,7 @@ public function trash()
         'types' => $types,
     ]);
 }
+
 
 
 }

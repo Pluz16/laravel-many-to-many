@@ -27,9 +27,9 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function types()
+    public function type()
     {
-        return $this->belongsToMany(Type::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function getRouteKeyName()
