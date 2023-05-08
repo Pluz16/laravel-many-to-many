@@ -37,6 +37,11 @@ class Project extends Model
         return 'slug';
     }
 
+    public function technologies()
+    {
+    return $this->belongsToMany(Technology::class);
+    }
+
     /**
      * The attributes that should be mutated to dates.
      *
