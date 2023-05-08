@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 use App\Models\Project;
+use App\Models\Technology;
 
 class ProjectsTableSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class ProjectsTableSeeder extends Seeder
             $type_id = rand(1, 3);
             $user_id = 1;
     
-            Project::create([
+            $project = Project::create([
                 'name' => $name,
                 'user_id' => $user_id,
                 'description' => $description,
@@ -35,7 +36,9 @@ class ProjectsTableSeeder extends Seeder
                 'slug' => $slug,
                 'type_id' => $type_id,
             ]);
+    
+            $technologies = Technology::inRandomOrder()->limit(rand(1, 5))->get();
+            $project->technologies()->sync($technologies);
         }
     }
-    
-}
+}    
